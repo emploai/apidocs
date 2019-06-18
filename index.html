@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang=en>
+   <head>
+      <meta charset=utf-8>
+      <meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1">
+      <title>API Reference</title>
+      <link rel=icon href=images/bookmark.png> <link href=stylesheets/screen.css rel=stylesheet media=screen>
+      <link href=stylesheets/print.css rel=stylesheet media=print>
+      <link href=stylesheets/highlight-monokai.css rel=stylesheet media=screen,print>
+      <script src=javascripts/all.js type=text/javascript> </script> </head> <body class="" data-languages="[&#34;bash&#34;,&#34;ruby&#34;,&#34;python&#34;,&#34;javascript&#34;]"> <a href=# id=nav-button>
+         <span>NAV <img alt=navbar class=image-navbar src=images/navbar.png></span>
+      </a>
+
+      <div class=tocify-wrapper>
+         <img alt=logo class=image-logo src=images/logo.png>
+         
+            <div class=lang-selector>
+               
+                  <a href=# data-language-name="bash">bash</a>
+               
+                  <a href=# data-language-name="ruby">ruby</a>
+               
+                  <a href=# data-language-name="python">python</a>
+               
+                  <a href=# data-language-name="javascript">javascript</a>
+               
+            </div>
+         
+         
+            <div class=search>
+               <input type=text class=search id=input-search placeholder="Search">
+            </div>
+            <ul class=search-results></ul>
+         
+         <div id=toc></div>
+         
+            <ul class=toc-footer>
+               
+                  <li><a href=#>Sign up for a developer key</a></li>
+               
+            </ul>
+         
+      </div>
+
+      <div class=page-wrapper>
+         <div class=dark-box></div>
+         <div class=content>
+            
+               <h1 id="introduction">Introduction</h1>
+<p>The Emploai API is organized around <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a>. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.</p>
+<p>You can use the Emploai API in test mode, which does not affect your live data or interact with the notification systems. The API key you use to <a href="/#authentication">authenticate</a> the request determines whether the request is live mode or test mode.</p>
+<p>The Emploai API differs for every account as we release new <a href="/#versioning">versions</a> and tailor functionality. Log in to see docs customized to your version of the API, with your test key and data.</p>
+<h1 id="authentication">Authentication</h1>
+<blockquote>
+<p>To authorize, use this code:</p>
+</blockquote>
+<pre class="highlight ruby"><code><span class="hljs-keyword">require</span> <span class="hljs-string">'Emploai'</span>
+
+api = Emploai::APIClient.authorize!(<span class="hljs-string">'your_api_key'</span>)</code></pre><pre class="highlight python"><code><span class="hljs-keyword">import</span> Emploai
+
+api = Emploai.authorize(<span class="hljs-string">'your_api_key'</span>)</code></pre><pre class="highlight bash"><code><span class="hljs-comment"># With shell, you can just pass the correct header with each request</span>
+curl <span class="hljs-string">"api_endpoint_here"</span>
+  -H <span class="hljs-string">"Authorization: your_api_key"</span></code></pre><pre class="highlight javascript"><code><span class="hljs-keyword">const</span> Emploai = <span class="hljs-built_in">require</span>(<span class="hljs-string">'Emploai'</span>);
+
+<span class="hljs-keyword">let</span> api = Emploai.authorize(<span class="hljs-string">'your_api_key'</span>);</code></pre><blockquote>
+<p>Make sure to replace <code>your_api_key</code> with your API key.</p>
+</blockquote>
+<p>Emploai uses API keys to allow access to the API. You can view and manage your API keys in the Emploai Dashboard.</p>
+<p>Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.</p>
+<p>All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.</p>
+<p>Emploai expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p><code>Authorization: your_api_key</code></p>
+<aside class=notice>
+You must replace <code>your_api_key</code> with your instance specific API key.
+</aside>
+
+<h1 id="versioning">Versioning</h1>
+<p>When we make backwards-incompatible changes to the API, we release new, dated versions. The current version is 2019-03-14. Read our API upgrades guide to see our API changelog and to learn more about backwards compatibility.</p>
+<p>All requests will use your account API settings, unless you override the API version. The changelog lists every available version. Note that events generated by API requests will always be structured according to your account API version.</p>
+<p>To set the API version on a specific request, send a Emploai-Version header.</p>
+<p>You can visit your Dashboard to upgrade your API version. As a precaution, use API versioning to test a new API version before committing to an upgrade.</p>
+<h1 id="contacts">Contacts</h1>
+<h2 id="get-all-contacts">Get All Contacts</h2>
+<pre class="highlight ruby"><code><span class="hljs-keyword">require</span> <span class="hljs-string">'Emploai'</span>
+
+api = Emploai::APIClient.authorize!(<span class="hljs-string">'your_api_key'</span>)
+api.contacts.get</code></pre><pre class="highlight python"><code><span class="hljs-keyword">import</span> Emploai
+
+api = Emploai.authorize(<span class="hljs-string">'your_api_key'</span>)
+api.contacts.get()</code></pre><pre class="highlight bash"><code>curl <span class="hljs-string">"https://example.com/api/contacts"</span>
+  -H <span class="hljs-string">"Authorization: your_api_key"</span></code></pre><pre class="highlight javascript"><code><span class="hljs-keyword">const</span> Emploai = <span class="hljs-built_in">require</span>(<span class="hljs-string">'Emploai'</span>);
+
+<span class="hljs-keyword">let</span> api = Emploai.authorize(<span class="hljs-string">'your_api_key'</span>);
+<span class="hljs-keyword">let</span> contacts = api.contacts.get();</code></pre><blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code>[
+  {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"John Doe"</span>,
+    <span class="hljs-attr">"email"</span>: <span class="hljs-string">"john@example.com"</span>,
+    <span class="hljs-attr">"mobile"</span>: 'xxx xxx xxxx',
+    <span class="hljs-attr">"orgcode"</span>: 'example-talent'
+  },
+  {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Jane Dear"</span>,
+    <span class="hljs-attr">"email"</span>: <span class="hljs-string">"jane@example.com"</span>,
+    <span class="hljs-attr">"mobile"</span>: 'xxx xxx xxxx',
+    <span class="hljs-attr">"orgcode"</span>: 'example-talent'
+  }
+]</code></pre><p>This endpoint retrieves all contacts.</p>
+<h3 id="http-request">HTTP Request</h3>
+<p><code>GET https://example.com/api/contacts</code></p>
+<h3 id="query-parameters">Query Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>include_internal</td>
+<td>false</td>
+<td>If set to true, the result will also include internal contacts.</td>
+</tr>
+<tr>
+<td>available</td>
+<td>true</td>
+<td>If set to true, the result will only include contacts that have indicated availability in the last 1 month.</td>
+</tr>
+</tbody></table>
+<aside class=success>
+Remember — a contact is considered active only when they have signed in atleast once!
+</aside>
+
+<h2 id="get-a-specific-contact">Get a Specific Contact</h2>
+<pre class="highlight ruby"><code><span class="hljs-keyword">require</span> <span class="hljs-string">'Emploai'</span>
+
+api = Emploai::APIClient.authorize!(<span class="hljs-string">'your_api_key'</span>)
+api.contacts.get(<span class="hljs-number">2</span>)</code></pre><pre class="highlight python"><code><span class="hljs-keyword">import</span> Emploai
+
+api = Emploai.authorize(<span class="hljs-string">'your_api_key'</span>)
+api.contacts.get(<span class="hljs-number">2</span>)</code></pre><pre class="highlight bash"><code>curl <span class="hljs-string">"https://example.com/api/contacts/2"</span>
+  -H <span class="hljs-string">"Authorization: your_api_key"</span></code></pre><pre class="highlight javascript"><code><span class="hljs-keyword">const</span> Emploai = <span class="hljs-built_in">require</span>(<span class="hljs-string">'Emploai'</span>);
+
+<span class="hljs-keyword">let</span> api = Emploai.authorize(<span class="hljs-string">'your_api_key'</span>);
+<span class="hljs-keyword">let</span> max = api.contacts.get(<span class="hljs-number">2</span>);</code></pre><blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code>{
+  <span class="hljs-attr">"id"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Jane Dear"</span>,
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"jane@example.com"</span>,
+  <span class="hljs-attr">"mobile"</span>: 'xxx xxx xxxx',
+  <span class="hljs-attr">"orgcode"</span>: 'example-talent'
+}</code></pre><p>This endpoint retrieves a specific contact.</p>
+<h3 id="http-request-with-id">HTTP Request (with ID)</h3>
+<p><code>GET https://example.com/contacts/&lt;ID&gt;</code></p>
+<h3 id="url-parameters">URL Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ID</td>
+<td>The ID of the contact to retrieve</td>
+</tr>
+</tbody></table>
+
+            
+               <h1 id="errors">Errors</h1>
+<p>Emploai uses conventional HTTP response codes to indicate the success or failure of an API request. In general: Codes in the <code>2xx</code> range indicate success. Codes in the <code>4xx</code> range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.). Codes in the <code>5xx</code> range indicate an error with Emploai&#39;s servers (these are rare).</p>
+<p>Some <code>4xx</code> errors that could be handled programmatically (e.g., a user is deleted ) include an error code that briefly explains the error reported.</p>
+<table>
+<thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>Everything worked as expected.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request -- The request was unacceptable, often due to missing a required parameter.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized -- No valid API key provided.</td>
+</tr>
+<tr>
+<td>402</td>
+<td>Request Failed -- The parameters were valid but the request failed.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found -- The requested resource doesn&#39;t exist.</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Not Acceptable -- The request conflicts with another request (perhaps due to using the same idempotent key).</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests -- Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+</tr>
+</tbody></table>
+
+            
+         </div>
+         <div class=dark-box>
+            
+               <div class=lang-selector>
+                  
+                     <a href=# data-language-name="bash">bash</a>
+                  
+                     <a href=# data-language-name="ruby">ruby</a>
+                  
+                     <a href=# data-language-name="python">python</a>
+                  
+                     <a href=# data-language-name="javascript">javascript</a>
+                  
+               </div>
+            
+         </div>
+      </div>
+
+   </body>
+
+</html>
